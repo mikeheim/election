@@ -3,33 +3,36 @@ const jwtUtil = require('../util/jwtutil')
 
 const Authenticate = {
     
-    authenticate: function(req, res)
+    // For actually authenticating the user
+    authenticate: function(req, res, next)
     {
-        let user = req.body;
         var sql = 'SELECT iduser, username, email FROM user WHERE username = ? AND password = ?'
-        var inserts = [user.username, user.password]
-      
-        console.log(db.format(sql, inserts))
-        
-        let results = db.query(sql
+        var inserts = [req.body.username, req.body.password]
+
+        //Execute query
+        db.query(sql
         , inserts
         , function(error, results, fields){
             var resultJson = JSON.stringify(results);
             resultJson = JSON.parse(resultJson);
-
-            if(resultJson.length === 0)
+            //Pass error up to express
+            if(error){
+                next(error)
+            }
+            //Invalid user
+            else if(resultJson.length === 0)
             {
                 res.status(404).send("Invalid User supplied")
             }
             else
             {
+                //Add data to JWT, excluding password
                 let payload = {};
                 payload.iduser = resultJson[0].iduser
                 payload.username = resultJson[0].username
                 payload.email = resultJson[0].email
-                console.log(payload)
+                //Sign a new JWT
                 var token = jwtUtil.sign(payload)
-                console.log(token);
                 res.status(200).header('jwt', token).send("Valid User supplied")
             }
         })

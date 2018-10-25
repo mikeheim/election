@@ -3,7 +3,8 @@ const jwtUtil = require('../util/jwtutil')
 
 const Election = {
 
-    create: function(req, res)
+    //Create
+    create: function(req, res, next)
     {
         let election = req.body
         //first insert the new election, then insert the candidates to the relationship table
@@ -13,8 +14,7 @@ const Election = {
         let results = db.query(electionSql, inserts, function(error, results){
             if(error)
             {
-                console.log(error)
-                res.status('500').send("Internal error")
+                next(error)
             } else {
                 db.query('SELECT LAST_INSERT_ID() as pk', function(error, results){
                     var resultJson = JSON.stringify(results);
@@ -38,8 +38,7 @@ const Election = {
                     db.query(candidateSql, inserts, function(error, results){
                         if(error)
                         {
-                            res.status('500').send("Internal Error")
-                            console.log(error);
+                            next(error)
                         }else{
                             res.status('201').send("Election created")
                         }
@@ -48,21 +47,20 @@ const Election = {
             }
         })
     },
-    vote: function(req, res)
+    vote: function(req, res, next)
     {
         let idelection = req.body.idelection
         let idcandidate = req.body.idcandidate
         //First check to see if the current user has voted 
         let user = jwtUtil.verify(req.header('jwt'))
-        console.log(user);
+
     
         let sql = 'SELECT * from votes where idelection = ? and iduser = ?'
         let inserts = [idelection, user.iduser]
 
         db.query(sql, inserts, function(error, results){
             if(error){
-                console.log(error)
-                res.status('500').send("Internal Error")
+                next(error)
             } else if(results.length > 0)
             {
                 res.status('403').send("User has already voted")
@@ -73,11 +71,11 @@ const Election = {
                 let inserts = [idelection, user.iduser, idcandidate]
                 db.query(sql, inserts, function(error, results){
                     if(error){
-                        console.log(error)
-                        res.status('500').send("Internal Error")
-                        return
+                        next(error)
+                    }else{
+                        res.status(200).send("Vote cast!")
+
                     }
-                    res.status(200).send("Vote cast!")
                 })
             }
 
@@ -85,15 +83,18 @@ const Election = {
             
         })
     },
-    getActiveElections: function(req, res){
-
+    getActiveElections: function(req, res, next){
         //Query to get elections and current standings
-        let sql = 'SELECT count(*) as votes, c.candidatename, e.electionname FROM votes v join election e on v.idelection = e.idelection join candidate c on v.idcandidate = c.idcandidate group by c.candidatename, e.electionname ORDER BY e.electionname'
+        let sql = 'SELECT count(*) as votes, c.candidatename, e.electionname FROM election e left join votes v on v.idelection = e.idelection join candidate c on v.idcandidate = c.idcandidate group by c.candidatename, e.electionname ORDER BY e.electionname'
         db.query(sql, function(error, results){
-            var resultJson = JSON.stringify(results);
-            results = JSON.parse(resultJson);
+            if(error){
+                next(error)
+            } else {
+                var resultJson = JSON.stringify(results);
+                results = JSON.parse(resultJson);
+                res.status(200).json(results)
+            }
             
-            res.status(200).json(results)
         })
     }
 }

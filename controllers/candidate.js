@@ -2,31 +2,29 @@ const db = require('../db');
 
 const Candidate = {
 
-    create: function(req, res)
+    //Create a new candidate
+    create: function(req, res, next)
     {
-        let rawCandidate = req.body;
-        let candidate = {"name": rawCandidate.name, "party": rawCandidate.party, "incumbent": rawCandidate.incumbent};
-
         let sql = 'INSERT INTO candidate (candidatename, idparty, incumbent) VALUES (?,?,?)'
-        let results = db.query(sql, [candidate.name, candidate.party, candidate.incumbent]
+        let results = db.query(sql, [req.body.name, req.body.party, req.body.incumbent]
             , function(error, results, fields){
                 if(error)
                 {
-                    res.status('500').send('Internal Error')
+                    next(error)
                 } else {
                     res.status('201').send()
                 }
             })
     },
 
-    getAll: function(req, res)
+    //Get all of the candidates
+    getAll: function(req, res, next)
     {
         let sql = 'SELECT * FROM candidate c JOIN party p on p.idparty = c.idparty'
         let results = db.query(sql,
             function(error, results){
                 if(error){
-                    res.status('500').send('Internal error')
-                    console.log(error);
+                    next(error)
                 }
                 else
                 {

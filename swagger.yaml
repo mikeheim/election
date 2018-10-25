@@ -1,0 +1,280 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Election Collection
+  description: 'TODO: Add Description'
+  contact: {}
+host: localhost:4200
+basePath: /
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /authenticate:
+    post:
+      description: 'TODO: Add Description'
+      summary: authenticate
+      tags:
+      - Misc
+      operationId: AuthenticatePost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AuthenticateRequest'
+      responses:
+        200:
+          description: ''
+  /parties:
+    get:
+      description: 'TODO: Add Description'
+      summary: get-parties
+      tags:
+      - Misc
+      operationId: PartiesGet
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /candidate/create:
+    post:
+      description: 'TODO: Add Description'
+      summary: candidate-create
+      tags:
+      - Misc
+      operationId: CandidateCreatePost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CandidateCreaterequest'
+      responses:
+        200:
+          description: ''
+  /candidates:
+    get:
+      description: 'TODO: Add Description'
+      summary: get-candidates
+      tags:
+      - Misc
+      operationId: CandidatesGet
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /election/create:
+    post:
+      description: 'TODO: Add Description'
+      summary: election-create
+      tags:
+      - Misc
+      operationId: ElectionCreatePost
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/ElectionCreaterequest'
+      responses:
+        200:
+          description: ''
+  /election/vote:
+    post:
+      description: 'TODO: Add Description'
+      summary: election-vote
+      tags:
+      - Misc
+      operationId: ElectionVotePost
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/ElectionVoterequest'
+      responses:
+        200:
+          description: ''
+  /elections:
+    get:
+      description: 'TODO: Add Description'
+      summary: get-elections
+      tags:
+      - Misc
+      operationId: ElectionsGet
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+definitions:
+  AuthenticateRequest:
+    title: authenticateRequest
+    example:
+      username: mike
+      password: password
+    type: object
+    properties:
+      username:
+        description: ''
+        type: string
+      password:
+        description: ''
+        type: string
+    required:
+    - username
+    - password
+  CandidateCreaterequest:
+    title: candidate-createRequest
+    example:
+      name: George W. Bush
+      party: 2
+      incumbent: false
+    type: object
+    properties:
+      name:
+        description: ''
+        type: string
+      party:
+        description: ''
+        type: integer
+        format: int32
+      incumbent:
+        description: ''
+        type: boolean
+    required:
+    - name
+    - party
+    - incumbent
+  ElectionCreaterequest:
+    title: election-createRequest
+    example:
+      name: Presidental Election
+      end: 2018-11-25 10:54:06
+      start: 2018-10-25 10:54:06
+      candidates:
+      - idcandidate: 1
+      - idcandidate: 2
+    type: object
+    properties:
+      name:
+        description: ''
+        type: string
+      end:
+        description: ''
+        type: string
+      start:
+        description: ''
+        type: string
+      candidates:
+        description: ''
+        type: array
+        items:
+          $ref: '#/definitions/Candidate'
+    required:
+    - name
+    - end
+    - start
+    - candidates
+  Candidate:
+    title: Candidate
+    type: object
+    properties:
+      idcandidate:
+        description: ''
+        type: integer
+        format: int32
+    required:
+    - idcandidate
+  ElectionVoterequest:
+    title: election-voteRequest
+    example:
+      idelection: 4
+      idcandidate: 2
+    type: object
+    properties:
+      idelection:
+        description: ''
+        type: integer
+        format: int32
+      idcandidate:
+        description: ''
+        type: integer
+        format: int32
+    required:
+    - idelection
+    - idcandidate
+tags:
+- name: Misc
+  description: ''

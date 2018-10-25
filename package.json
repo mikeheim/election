@@ -1,0 +1,28 @@
+{
+  "name": "election",
+  "version": "1.0.0",
+  "description": "API for executing elections",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeheim/election.git"
+  },
+  "author": "Mike Heim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikeheim/election/issues"
+  },
+  "homepage": "https://github.com/mikeheim/election#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "helmet": "^3.14.0",
+    "jsonwebtoken": "^8.3.0",
+    "mysql": "^2.16.0"
+  }
+}

@@ -11,7 +11,8 @@ const Candidate = db.define('candidate', {
       autoIncrement: true
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true
     }
   })
   Candidate.belongsTo(Party)

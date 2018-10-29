@@ -7,7 +7,8 @@ const Party = db.define('party', {
       autoIncrement: true
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true
     }
   })
   db.sync()

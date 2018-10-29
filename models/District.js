@@ -9,7 +9,8 @@ const District = db.define('district', {
       autoIncrement: true
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true
     }
   });
 

@@ -7,5 +7,4 @@ API for conducting elections
 * execute node index.js. The application will be listening on 4200
 
 # Database
-This repository contains a dump file. Restore a database from this dump file to get an up to date database.
-If your database is not local, edit db/index.js to change your connection
+Simply create an empty schema in your mysql instance titled "election". When the app is started, the necessary tables will be created automatically

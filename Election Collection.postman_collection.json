@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "43e7dd50-5fe6-459b-a17f-2716d6adbcc5",
+		"name": "Election Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "district-create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Washington State\",\n\t\"parentDistrictId\": 1\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/district/create",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"district",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-districts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4200/districts",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"districts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "jwt",
+						"type": "text",
+						"value": "{{jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"Daisy\",\n\t\"password\": \"password\",\n\t\"email\": \"Jim@mike.com\",\n\t\"districtId\": 3\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/user/create",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c55eb929-f15e-496d-83c3-421f358c721f",
+						"exec": [
+							"var token = postman.getResponseHeader(\"jwt\")",
+							"pm.environment.set(\"jwt\", token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"Daisy\",\n\t\"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/authenticate",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "party-create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Democrat\"\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/party/create",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"party",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-parties",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4200/parties",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"parties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "candidate-create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Hillary Clinton\",\n\t\"party\": 2\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/candidate/create",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"candidate",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-candidates",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4200/candidates",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"candidates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "election-create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"name\": \"Presidental Election\",\n\t\"end\": \"2018-11-25 10:54:06\",\n\t\"start\": \"2018-10-25 10:54:06\",\n\t\"district\": 1,\n\t\"candidates\": [\n\t\t{\"candidateId\": 1},\n\t\t{\"candidateId\": 2}\n\t]\n\t\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/election/create",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"election",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-candidates-for-election",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "jwt",
+						"type": "text",
+						"value": "{{jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4200/candidates/electionid/4",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"candidates",
+						"electionid",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "election-vote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"candidateId\": 6,\n\t\"electionId\": 4\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/election/vote",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"election",
+						"vote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-ballot",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "jwt",
+						"value": "{{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4200/ballot",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"ballot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-election-result",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "jwt",
+						"type": "text",
+						"value": "{{jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:4200/election/result/electionid/4",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"election",
+						"result",
+						"electionid",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

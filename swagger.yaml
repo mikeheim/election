@@ -13,6 +13,82 @@ consumes:
 produces:
 - application/json
 paths:
+  /district/create:
+    post:
+      description: 'TODO: Add Description'
+      summary: district-create
+      tags:
+      - Misc
+      operationId: DistrictCreatePost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/DistrictCreaterequest'
+      responses:
+        200:
+          description: ''
+  /districts:
+    get:
+      description: 'TODO: Add Description'
+      summary: get-districts
+      tags:
+      - Misc
+      operationId: DistrictsGet
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /user/create:
+    post:
+      description: 'TODO: Add Description'
+      summary: user-create
+      tags:
+      - Misc
+      operationId: UserCreatePost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UserCreaterequest'
+      responses:
+        200:
+          description: ''
   /authenticate:
     post:
       description: 'TODO: Add Description'
@@ -34,6 +110,35 @@ paths:
         description: ''
         schema:
           $ref: '#/definitions/AuthenticateRequest'
+      responses:
+        200:
+          description: ''
+  /party/create:
+    post:
+      description: 'TODO: Add Description'
+      summary: party-create
+      tags:
+      - Misc
+      operationId: PartyCreatePost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/PartyCreaterequest'
       responses:
         200:
           description: ''
@@ -131,6 +236,24 @@ paths:
       responses:
         200:
           description: ''
+  /candidates/electionid/4:
+    get:
+      description: 'TODO: Add Description'
+      summary: get-candidates-for-election
+      tags:
+      - Misc
+      operationId: CandidatesElectionid4Get
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
   /election/vote:
     post:
       description: 'TODO: Add Description'
@@ -160,13 +283,31 @@ paths:
       responses:
         200:
           description: ''
-  /elections:
+  /ballot:
     get:
       description: 'TODO: Add Description'
-      summary: get-elections
+      summary: get-ballot
       tags:
       - Misc
-      operationId: ElectionsGet
+      operationId: BallotGet
+      produces:
+      - application/json
+      parameters:
+      - name: jwt
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /election/result/electionid/4:
+    get:
+      description: 'TODO: Add Description'
+      summary: get-election-result
+      tags:
+      - Misc
+      operationId: ElectionResultElectionid4Get
       produces:
       - application/json
       parameters:
@@ -179,10 +320,54 @@ paths:
         200:
           description: ''
 definitions:
+  DistrictCreaterequest:
+    title: district-createRequest
+    example:
+      name: Washington State
+      parentDistrictId: 1
+    type: object
+    properties:
+      name:
+        description: ''
+        type: string
+      parentDistrictId:
+        description: ''
+        type: integer
+        format: int32
+    required:
+    - name
+    - parentDistrictId
+  UserCreaterequest:
+    title: user-createRequest
+    example:
+      username: Daisy
+      password: password
+      email: Jim@mike.com
+      districtId: 3
+    type: object
+    properties:
+      username:
+        description: ''
+        type: string
+      password:
+        description: ''
+        type: string
+      email:
+        description: ''
+        type: string
+      districtId:
+        description: ''
+        type: integer
+        format: int32
+    required:
+    - username
+    - password
+    - email
+    - districtId
   AuthenticateRequest:
     title: authenticateRequest
     example:
-      username: mike
+      username: Daisy
       password: password
     type: object
     properties:
@@ -195,12 +380,22 @@ definitions:
     required:
     - username
     - password
+  PartyCreaterequest:
+    title: party-createRequest
+    example:
+      name: Democrat
+    type: object
+    properties:
+      name:
+        description: ''
+        type: string
+    required:
+    - name
   CandidateCreaterequest:
     title: candidate-createRequest
     example:
-      name: George W. Bush
+      name: Hillary Clinton
       party: 2
-      incumbent: false
     type: object
     properties:
       name:
@@ -210,22 +405,19 @@ definitions:
         description: ''
         type: integer
         format: int32
-      incumbent:
-        description: ''
-        type: boolean
     required:
     - name
     - party
-    - incumbent
   ElectionCreaterequest:
     title: election-createRequest
     example:
       name: Presidental Election
       end: 2018-11-25 10:54:06
       start: 2018-10-25 10:54:06
+      district: 1
       candidates:
-      - idcandidate: 1
-      - idcandidate: 2
+      - candidateId: 1
+      - candidateId: 2
     type: object
     properties:
       name:
@@ -237,6 +429,10 @@ definitions:
       start:
         description: ''
         type: string
+      district:
+        description: ''
+        type: integer
+        format: int32
       candidates:
         description: ''
         type: array
@@ -246,35 +442,36 @@ definitions:
     - name
     - end
     - start
+    - district
     - candidates
   Candidate:
     title: Candidate
     type: object
     properties:
-      idcandidate:
+      candidateId:
         description: ''
         type: integer
         format: int32
     required:
-    - idcandidate
+    - candidateId
   ElectionVoterequest:
     title: election-voteRequest
     example:
-      idelection: 4
-      idcandidate: 2
+      candidateId: 6
+      electionId: 4
     type: object
     properties:
-      idelection:
+      candidateId:
         description: ''
         type: integer
         format: int32
-      idcandidate:
+      electionId:
         description: ''
         type: integer
         format: int32
     required:
-    - idelection
-    - idcandidate
+    - candidateId
+    - electionId
 tags:
 - name: Misc
   description: ''

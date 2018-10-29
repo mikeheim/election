@@ -5,6 +5,8 @@ const authRoutes = require('./routes/authenticate')
 const candidateRoutes = require('./routes/candidate')
 const partyRoutes = require('./routes/party')
 const electionRoutes = require('./routes/election')
+const districtRoutes = require('./routes/district')
+const userRoutes = require('./routes/user')
 
 //Utility for handling JWT
 const jwtUtil = require('./util/jwtutil')
@@ -18,6 +20,8 @@ authRoutes(app)
 partyRoutes(app)
 candidateRoutes(app)
 electionRoutes(app)
+districtRoutes(app)
+userRoutes(app)
 
 //Ensure each request is authenticated
 app.use(async (req, res, next) => {

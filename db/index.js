@@ -1,15 +1,19 @@
-var mysql = require('mysql')
-const port = 3306
-var connection = mysql.createConnection({
-    host: 'localhost',
-    port: port,
-    user: 'root',
-    password: 'password',
-    database: 'elections',
-    insecureAuth: true
+//Connect to mysql via sequelize ORM
+const Sequelize = require('sequelize');
+require('sequelize-hierarchy')(Sequelize)
+const sequelize = new Sequelize('election', 'root', 'password', {
+  host: 'localhost',
+  dialect: 'mysql',
+  operatorsAliases: false,
+
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
 });
 
+module.exports = sequelize
 
-connection.connect();
 
-module.exports = connection;

@@ -12,4 +12,9 @@ module.exports = function (app) {
     app.get('/candidates', function(req, res, next) {
         controller.getAll(req, res, next)
     })
+
+    app.get('/candidates/electionid/:electionId', function(req, res, next) {
+        controller.getForElection(req, res, next)
+    })
+
 }

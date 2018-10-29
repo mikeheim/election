@@ -13,7 +13,11 @@ module.exports = function (app) {
         controller.vote(req, res, next)
     })
 
-    app.get('/elections', function(req, res, next){
-        controller.getActiveElections(req, res, next)
+    app.get('/ballot', function(req, res, next){
+        controller.getBallot(req, res, next)
+    })
+
+    app.get('/election/result/electionid/:electionId', function(req, res, next){
+        controller.result(req, res, next)
     })
 }
